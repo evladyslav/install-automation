@@ -82,7 +82,7 @@ apt update && apt list --upgradable && apt dist-upgrade -y -o Dpkg::Options::=--
 sleep 10
 
 LEVEL=$(astra-modeswitch get)
-if [[ $LEVEL -ne 2]]
+if [[ $LEVEL -ne 2 ]]
 then  
     astra-modeswitch set 2
     astra-mic-control enable
