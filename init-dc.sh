@@ -112,5 +112,13 @@ aldpro-server-install -d $DOMAIN  -p $PASSWORD_ADMIN -n $NAME --ip $IPV4  --setu
 echo $PASSWORD_ADMIN | kinit admin
 ipa group-add-member 'ald trust admin' --users=admin
 
+cat <<EOL > /etc/bind/ipa-options-ext.conf
+allow-recursion { any; };
+allow-query-cache { any; };
+dnssec-validation no;
+EOL
+sudo systemctl restart bind9-pkcs11.service
+
+
 sleep 10
 reboot

@@ -7,7 +7,7 @@ ASTRA_EXT="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repositor
 ALD_VERSION="2.2.0"
 ALD_MAIN="https://download.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
 
-HOSTNAME="dc01.local.domain"
+HOSTNAME="dc02.local.domain"
 DOMAIN="local.domain"
 
 IPV4="172.26.71.221"
@@ -21,6 +21,7 @@ PASSWORD_ADMIN=""
 
 cat <<EOL > /etc/apt/sources.list
 deb $ASTRA_BASE 1.7_x86-64 main non-free contrib
+deb $ASTRA_EXT 1.7_x86-64 contrib main non-free 
 EOL
 
 cat <<EOL > /etc/apt/sources.list.d/aldpro.list
@@ -71,6 +72,8 @@ EOL
 systemctl restart networking
 
 apt update && apt list --upgradable && apt dist-upgrade -y -o Dpkg::Options::=--force-confnew
+apt install resolvconf
+systemctl start resolvconf.service
 
 sleep 10
 
@@ -88,5 +91,11 @@ systemctl restart networking
 
 /opt/rbta/aldpro/client/bin/aldpro-client-installer -c $DOMAIN  -u admin -p $PASSWORD_ADMIN -d $NAME -i -f 
 
+cat <<EOL > /etc/bind/ipa-options-ext.conf
+allow-recursion { any; };
+allow-query-cache { any; };
+dnssec-validation no;
+EOL
+sudo systemctl restart bind9-pkcs11.service
 sleep 10
 reboot
