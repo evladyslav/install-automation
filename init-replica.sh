@@ -5,7 +5,7 @@ ASTRA_BASE="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/reposito
 ASTRA_EXT="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-extended"
 
 ALD_VERSION="2.2.0"
-ALD_MAIN="deb https://download.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
+ALD_MAIN="https://download.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
 
 HOSTNAME="dc01.local.domain"
 DOMAIN="local.domain"
