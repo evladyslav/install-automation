@@ -5,7 +5,7 @@ ASTRA_BASE="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/reposito
 ASTRA_EXT="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-extended"
 
 ALD_VERSION="2.2.0"
-ALD_MAIN="https://dl.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
+ALD_MAIN="deb https://download.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
 
 HOSTNAME="dc01.local.domain"
 DOMAIN="local.domain"
@@ -24,7 +24,7 @@ deb $ASTRA_BASE 1.7_x86-64 main non-free contrib
 EOL
 
 cat <<EOL > /etc/apt/sources.list.d/aldpro.list
-deb $ALD_MAIN $ALD_VERSION main
+deb $ALD_MAIN
 EOL
 
 cat <<EOL > /etc/apt/preferences.d/aldpro
@@ -33,7 +33,7 @@ Pin: release n=generic
 Pin-Priority: 900
 EOL
 
-hostnamectl set-hostname $HOSTNAME_NEW 
+hostnamectl set-hostname $HOSTNAME 
 NAME=`awk -F"." '{print $1}' /etc/hostname`
 
 systemctl stop NetworkManager
@@ -60,7 +60,7 @@ EOL
 
 cat <<EOL > /etc/hosts
 127.0.0.1 localhost.localdomain localhost
-$IPV4 $HOSTNAME_NEW $NAME
+$IPV4 $HOSTNAME $NAME
 EOL
 
 cat <<EOL > /etc/resolv.conf
