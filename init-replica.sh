@@ -1,28 +1,26 @@
 #!/bin/bash 
 
 #**************************************************************************************************************************
-ALD_VERSION="2.2.0"
 ASTRA_BASE="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-base"
 ASTRA_EXT="http://download.astralinux.ru/astra/frozen/1.7_x86-64/1.7.4/repository-extended"
 
+ALD_VERSION="2.2.0"
 ALD_MAIN="https://dl.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
 
-HOSTNAME_NEW="dc01.toxi.city"
+HOSTNAME_NEW="dc01.local.domain"
+DOMAIN="local.domain"
 IPV4="172.26.71.221"
 MASK="255.255.255.0"
 GATEWAY="172.26.71.1"
-#Domain name
-SEARCH="toxi.city"
-#IP-адрес контроллера домена
+
+# Domain controller IP-address
 NAMESERVERS="172.26.71.220"
-PASSWORD_ADMIN="1QAZxsw2"
+PASSWORD_ADMIN=""
 
 #**************************************************************************************************************************
 
-#Добавление репозиториев Astra Linux
 cat <<EOL > /etc/apt/sources.list
 deb $ASTRA_BASE 1.7_x86-64 main non-free contrib
-deb $ASTRA_EXT 1.7_x86-64 main contrib non-free
 EOL
 
 #Добавление репозиториев ALD Pro
@@ -62,7 +60,7 @@ iface eth0 inet static
   netmask $MASK
   gateway $GATEWAY
   dns-nameservers $NAMESERVERS
-  dns-search $SEARCH
+  dns-search $DOMAIN
 EOL
 
 #Настройка /etc/hosts
@@ -73,7 +71,7 @@ EOL
 
 #Настройка /etc/resolv.conf
 cat <<EOL > /etc/resolv.conf
-search $SEARCH
+search $DOMAIN
 nameserver $NAMESERVERS
 EOL
 
@@ -96,7 +94,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -q -y aldpro-client
 
 systemctl restart networking
 
-/opt/rbta/aldpro/client/bin/aldpro-client-installer -c $SEARCH  -u admin -p $PASSWORD_ADMIN -d $NAME -i -f 
+/opt/rbta/aldpro/client/bin/aldpro-client-installer -c $DOMAIN  -u admin -p $PASSWORD_ADMIN -d $NAME -i -f 
 
 
 sleep 10
