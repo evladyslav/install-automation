@@ -10,6 +10,7 @@ ALD_MAIN="https://dl.astralinux.ru/aldpro/frozen/01/2.2.0 1.7_x86-64 main base"
 
 HOSTNAME="dc01.local.domain"
 DOMAIN="local.domain"
+
 IPV4="172.26.71.220"
 MASK="255.255.255.0"
 GATEWAY="172.26.71.1"
@@ -18,7 +19,6 @@ NAMESERVERS="8.8.8.8"
 PASSWORD_ADMIN=""
 
 #**************************************************************************************************************************
-
 cat <<EOL > /etc/apt/sources.list
 deb $ASTRA_BASE 1.7_x86-64 main non-free contrib
 deb $ASTRA_EXT 1.7_x86-64 main contrib non-free
@@ -84,7 +84,6 @@ then
 fi
 
 DEBIAN_FRONTEND=noninteractive apt-get install -q -y aldpro-mp aldpro-gc aldpro-syncer
-
 
 cat <<EOL > /etc/network/interfaces
 source /etc/network/interfaces.d/*
